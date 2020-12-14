@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Model\Question;
-use App\User;
 
 
 class CreateRepliesTable extends Migration
@@ -19,8 +17,8 @@ class CreateRepliesTable extends Migration
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
             $table->text("body");
-            $table->foreignId(Question::class)->constrained()->onDelete('cascade');
-            $table->foreignId(User::class)->constrained()->onDelete('cascade');
+            $table->foreignId("question_id")->constrained()->onDelete('cascade');
+            $table->foreignId("user_id")->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

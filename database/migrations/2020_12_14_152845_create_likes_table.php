@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Model\Reply;
-use App\User
 
 class CreateLikesTable extends Migration
 {
@@ -17,8 +15,8 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(Reply::class)->constrained()->onDelete('cascade');
-            $table->foreignId(User::class)->constrained()->onDelete('cascade');
+            $table->foreignId("reply_id")->constrained()->onDelete('cascade');
+            $table->foreignId("user_id")->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
