@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {
@@ -14,28 +15,20 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+       return Question::latest()->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+   
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
-        //
+        //auth()->user()->question()->create($request->validated());
+        $question = Question::create($request->validated());
     }
 
     /**
@@ -46,7 +39,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return $question;
     }
 
     /**
@@ -80,6 +73,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        return response('deleted', 204);
     }
 }
