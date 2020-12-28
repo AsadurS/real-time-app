@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Model\Question;
 use Illuminate\Http\Request;
 use App\Http\Requests\QuestionRequest;
-
+use App\Http\Resources\Question as QuestionResource;
+use App\Http\Requests\UpdateQuestionRequest;
 class QuestionController extends Controller
 {
     /**
@@ -14,8 +15,9 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-       return Question::latest()->get();
+    {  
+        
+       return  QuestionResource::collection(Question::latest()->get());
     }
 
    
@@ -39,7 +41,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        return $question;
+        return new QuestionResource($question);
     }
 
     /**
@@ -60,9 +62,10 @@ class QuestionController extends Controller
      * @param  \App\Model\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $question = $question->update($request->validated());
+        return response($question);
     }
 
     /**

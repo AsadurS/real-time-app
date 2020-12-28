@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Model\Question;
 use Illuminate\Support\Str;
-class QuestionRequest extends FormRequest
+class UpdateQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +17,7 @@ class QuestionRequest extends FormRequest
         return true;
     }
 
-  protected function prepareForValidation()
+    protected function prepareForValidation()
    {
     
       $this->merge([
@@ -30,10 +31,10 @@ class QuestionRequest extends FormRequest
      * @return array
      */
     public function rules()
-    { 
+    {   
         return [
-           "title"=> "required|min:5",
-           "slug"=> "required|unique:questions,slug|min:5",
+            "title"=> "required|min:5",
+           "slug"=> "required|min:5|unique:questions,slug,".$this->question->id,
            "body"=> "required",
            "user_id"=> "required|exists:users,id",
            "category_id"=> "required|exists:categories,id",

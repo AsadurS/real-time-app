@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     /**
@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return Category::latest()->get();
     }
 
     /**
@@ -35,18 +35,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge(['slug' => Str::slug($request->name)]);
+        $category = Category::create($request->all());
+        return $category;
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource
      *
      * @param  \App\Model\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
     {
-        //
+        return $category;
     }
 
     /**
@@ -69,7 +71,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+         $request->merge(['slug' => Str::slug($request->name)]);
+        $category = $category->update($request->all());
+        return $category;
     }
 
     /**
@@ -79,7 +83,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
-    {
-        //
+    {  
+         $category->delete();
+
+         return response('deleted', 204);
     }
 }

@@ -12,11 +12,11 @@ class Question extends Model
    //protected $guarded  =[];
 
 
-    public function setSlugAttribute($value)
-    {
+    // public function setSlugAttribute($value)
+    // {
 
-       $this->attributes['slug'] = Str::slug($value);
-    }
+    //    $this->attributes['slug'] = Str::slug($value);
+    // }
 
     public function getCreatedAtAttribute($value)
     {

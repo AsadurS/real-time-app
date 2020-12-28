@@ -8,6 +8,8 @@ use App\Model\Like;
 use App\Model\Question;
 class Reply extends Model
 {
+
+    protected $guarded  =[];
     public function user() {
     	return $this->belongsTo(User::class);
     }
