@@ -9,6 +9,11 @@ use App\Http\Resources\Question as QuestionResource;
 use App\Http\Requests\UpdateQuestionRequest;
 class QuestionController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware("jwt", ["expect"=>["index", "show"]]);
+    }
     /**
      * Display a listing of the resource.
      *

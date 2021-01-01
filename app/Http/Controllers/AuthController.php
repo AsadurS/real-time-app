@@ -1,7 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -12,7 +15,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('jwt', ['except' => ['login', 'signup']]);
     }
 
     /**
@@ -26,10 +29,28 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->respondWithToken($token);
     }
+    /**
+    * validation
+    *"email"=>"required|email|users:unique,email",
+    *"email"=>"required|email|users:unique,email,{$user->id}",
+    *"email"=>["required","email",Rule::unique(User::class, "email")->ignore($user->id,"id")],
+    *
+    */
+    public function signup(Request $request)
+    {
+       $request->validate([
+        "name"=>["required","string","min:2","max:20"],
+        "email"=>["required","email",Rule::unique(User::class, "email")],
+        'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'min:6'
+       ]);
 
+        User::create($request->all());
+
+     return $this->login($request);
+    }
     /**
      * Get the authenticated User.
      *

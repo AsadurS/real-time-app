@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ReplyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("jwt", ["expect"=>["index", "show"]]);
+    }
     /**
      * Display a listing of the resource.
      *

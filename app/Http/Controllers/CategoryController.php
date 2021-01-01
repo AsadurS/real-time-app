@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
+    
+     public function __construct()
+    {
+        $this->middleware("jwt", ["expect"=>["index", "show"]]);
+    }
     /**
      * Display a listing of the resource.
      *
