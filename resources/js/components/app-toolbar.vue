@@ -18,7 +18,7 @@
 		        Category
 		      </v-btn text>
 		      <v-btn text>
-		        Login
+		       <router-link to="/login">Login</router-link> 
 		      </v-btn>
 		</v-toolbar-items>      
     </v-toolbar>

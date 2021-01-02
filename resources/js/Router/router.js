@@ -7,7 +7,9 @@ const routes = [
   { path: '/login', component: Login }
 ]
 const router = new VueRouter({
-  routes // short for `routes: routes`
+  routes, // short for `routes: routes`
+  mode:'history',
+  hashbag:false
 })
 
 export default router
