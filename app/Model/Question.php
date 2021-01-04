@@ -10,8 +10,6 @@ class Question extends Model
 {
    protected $fillable = ["title", "slug", "body","user_id", "category_id"];
    //protected $guarded  =[];
-
-
     // public function setSlugAttribute($value)
     // {
 
@@ -22,10 +20,12 @@ class Question extends Model
     {
         return Carbon::parse($value)->format("d M, Y");
     }
+
    public function getRouteKeyName()
    {
-    return "slug";
+        return "slug";
    }
+
     public function user()
     {
     	return $this->belongsTo(User::class);
@@ -35,6 +35,7 @@ class Question extends Model
     {
     	return $this->hasMany(Reply::class);
     }
+    
     public function caeogory()
     {
     	return $this->hasMany(Category::class);

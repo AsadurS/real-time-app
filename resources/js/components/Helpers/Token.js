@@ -1,4 +1,8 @@
 class Token{
+
+	/**
+	* Check Token is Valid ro not
+	*/
 	isValid(token)
 	{
 		const payload = this.payload(token);
@@ -9,16 +13,17 @@ class Token{
 
 		return false;
 	}
+
+	/**
+	* Helper for Payload Decode
+	*/
 	payload(token){
+		
 	   const payload = 	token.split(".")[1];
 
-	 return this.decode(payload);
+	   return JSON.parse(atob(payload));
 	}
 
-	decode(payload)
-	{
-		 return JSON.parse(atob(payload));
-	}
 }
 
 export default Token = new Token();

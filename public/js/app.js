@@ -98447,11 +98447,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var material_design_icons_iconfont_dist_material_design_icons_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(material_design_icons_iconfont_dist_material_design_icons_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Router_router_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Router/router.js */ "./resources/js/Router/router.js");
 /* harmony import */ var _components_Helpers_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Helpers/User */ "./resources/js/components/Helpers/User.js");
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -98538,21 +98533,37 @@ var AppStorage = /*#__PURE__*/function () {
 
   _createClass(AppStorage, [{
     key: "storeToken",
+
+    /**
+    * Set Token in Local storage
+    */
     value: function storeToken(token) {
       localStorage.setItem("token", token);
     }
+    /**
+    * Set User in Local storage
+    */
+
   }, {
     key: "sotreUser",
     value: function sotreUser(user) {
       localStorage.setItem("name", user.name);
       localStorage.setItem("email", user.email);
     }
+    /**
+    * Function call Set Token & User in Local storage
+    */
+
   }, {
     key: "store",
     value: function store(user, token) {
       this.sotreUser(user);
       this.storeToken(token);
     }
+    /**
+    * Clear all Local storage
+    */
+
   }, {
     key: "clear",
     value: function clear() {
@@ -98560,16 +98571,28 @@ var AppStorage = /*#__PURE__*/function () {
       localStorage.removeItem("name");
       localStorage.removeItem("email");
     }
+    /**
+    * Get Token From local storage
+    */
+
   }, {
     key: "getToken",
     value: function getToken() {
       return localStorage.getItem("token");
     }
+    /**
+    * Get name From local storage
+    */
+
   }, {
     key: "getName",
     value: function getName() {
       return localStorage.getItem("name");
     }
+    /**
+    * Get Token From email storage
+    */
+
   }, {
     key: "getEmail",
     value: function getEmail() {
@@ -98606,6 +98629,10 @@ var Token = /*#__PURE__*/function () {
 
   _createClass(Token, [{
     key: "isValid",
+
+    /**
+    * Check Token is Valid ro not
+    */
     value: function isValid(token) {
       var payload = this.payload(token);
 
@@ -98615,15 +98642,14 @@ var Token = /*#__PURE__*/function () {
 
       return false;
     }
+    /**
+    * Helper for Payload Decode
+    */
+
   }, {
     key: "payload",
     value: function payload(token) {
       var payload = token.split(".")[1];
-      return this.decode(payload);
-    }
-  }, {
-    key: "decode",
-    value: function decode(payload) {
       return JSON.parse(atob(payload));
     }
   }]);
@@ -98662,13 +98688,21 @@ var User = /*#__PURE__*/function () {
 
   _createClass(User, [{
     key: "login",
+
+    /**
+    * Login user using email amd password
+    */
     value: function login(data) {
       var _this = this;
 
       axios.post("/api/auth/login", data).then(function (res) {
         return _this.responseAfterLogin(res);
-      }); //	token.payload(res.data.access_token)
+      });
     }
+    /**
+    * After login call app storage for set details
+    */
+
   }, {
     key: "responseAfterLogin",
     value: function responseAfterLogin(res) {
@@ -98677,11 +98711,55 @@ var User = /*#__PURE__*/function () {
         name: res.data.name,
         email: res.data.email
       };
-      console.log(user);
 
       if (_Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(access_token)) {
         _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].store(user, access_token);
       }
+    }
+    /**
+    * Check token has or not
+    */
+
+  }, {
+    key: "hasToken",
+    value: function hasToken() {
+      var storedToken = _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken();
+
+      if (storedToken) {
+        return _Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(storedToken) ? true : false;
+      }
+
+      return false;
+    }
+  }, {
+    key: "loggedIn",
+    value: function loggedIn() {
+      return this.hasToken();
+    }
+  }, {
+    key: "logout",
+    value: function logout() {
+      _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].clear();
+    }
+    /**
+    * Get user Data
+    */
+
+  }, {
+    key: "user",
+    value: function user() {
+      if (this.loggedIn()) {
+        var payload = _Token__WEBPACK_IMPORTED_MODULE_0__["default"].payload(_AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken());
+        var id = payload.sub;
+        var user = {
+          id: id,
+          name: _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getName(),
+          email: _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getEmail()
+        };
+        return user;
+      }
+
+      return false;
     }
   }]);
 
