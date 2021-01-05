@@ -6,9 +6,11 @@ class Token{
 	isValid(token)
 	{
 		const payload = this.payload(token);
+		let iss = payload.iss=== window.location.origin+"/api/auth/login"?payload.iss : window.location.origin+"/api/auth/signup";
+		console.log(payload.iss,iss)
 		if(payload)
 		{
-			return payload.iss === window.location.origin+"/api/auth/login"? true : false;
+			return payload.iss === iss ? true : false;
 		}
 
 		return false;

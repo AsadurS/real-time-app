@@ -31,10 +31,24 @@
 		},
 
 		methods:{
-			login()
-			{
-				User.login(this.form)
-			}
-		}
+		    async login(data)
+	        {
+		     await axios.post("/api/auth/login", this.form)
+				.then((res)=>{
+				 User.responseAfterLogin(res);
+				this.$router.push("forum")
+			    
+				this.$root.$emit("isShow",User.loggedIn());
+			})
+		}, 
+
+		created()
+		{
+		  if(User.loggedIn())
+		  {
+		  	this.$router.push("forum")
+		  }
+		},
+}
 	}
 </script>

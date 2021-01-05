@@ -6,20 +6,75 @@
       <v-toolbar-title>Title</v-toolbar-title>
 
       <v-spacer></v-spacer>
-		<v-toolbar-items>
-		      <v-btn text>
+		<div>
+		      
+	    <router-link 
+	     to="/forum">
+		      <v-btn  text>
 		       Forum
-		      </v-btn>
+		      </v-btn> 
+		</router-link> 
+		 <router-link 
+	     to="/forum"
+	      v-if="isShow">
+		      <v-btn  text>
+		      Ask Question
+		      </v-btn> 
+		</router-link> 
+		 <router-link 
+	     to="/forum"
+	      v-if="isShow">
+		      <v-btn  text>
+		     Category
+		      </v-btn> 
+		</router-link> 
+		 <router-link 
+	     to="/login"
+	      v-if="!isShow">
+		      <v-btn  text>
+		     Login
+		      </v-btn> 
+		</router-link>  
+		<router-link 
+	     to="/signup"
+	      v-if="!isShow">
+		      <v-btn  text>
+		     Signup
+		      </v-btn> 
+		</router-link> 
+      
+		      <v-btn @click="logout" v-if="isShow"  text>
+		       Logout
+		      </v-btn> 
+		
 
-		      <v-btn text>
-		       Ask Question
-		      </v-btn>
-		      <v-btn text>
-		        Category
-		      </v-btn text>
-		      <v-btn text>
-		       <router-link to="/login">Login</router-link> 
-		      </v-btn>
-		</v-toolbar-items>      
+		</div>      
     </v-toolbar>
 </template>
+
+<script>
+	export default{
+		data()
+		{   
+			return {
+				isShow: User.loggedIn(),
+				
+			}
+		},
+		methods:
+		{
+			logout(){
+				User.logout();
+				this.isShow = User.loggedIn();
+			},
+		},
+
+		mounted()
+		{
+			this.$root.$on("isShow", (data)=>{
+				console.log(data,5);
+              this.isShow = data;
+			})
+		}
+	}
+</script>

@@ -2,30 +2,22 @@ import token  from "./Token"
 import AppStorage  from "./AppStorage"
 class User{
 	
-    /**
-    * Login user using email amd password
-    */
-	login(data)
-	{
-		axios.post("/api/auth/login", data)
-				.then(res=> this.responseAfterLogin(res));
-	}
-
 	/**
 	* After login call app storage for set details
 	*/
 	responseAfterLogin(res)
-	{
+	{   
 		const access_token = res.data.access_token;
-
+           
 		const user ={
 					name:res.data.name,
 					email:res.data.email
 			    }
-
+         
 		if(token.isValid(access_token))
 		{   
-			AppStorage.store(user,access_token)
+			AppStorage.store(user,access_token);
+
 		}
 	}
 

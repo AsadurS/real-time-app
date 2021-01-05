@@ -39,14 +39,14 @@ class AuthController extends Controller
     *
     */
     public function signup(Request $request)
-    {
-       $request->validate([
+    {  
+
+      $request->validate([
         "name"=>["required","string","min:2","max:20"],
         "email"=>["required","email",Rule::unique(User::class, "email")],
-        'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
-        'password_confirmation' => 'min:6'
+        'password' => 'min:6|required_with:confirm_password|same:confirm_password',
+        'confirm_password' => 'min:6'
        ]);
-
         User::create($request->all());
 
      return $this->login($request);
