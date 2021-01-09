@@ -13,10 +13,10 @@ class Question extends JsonResource
      * @return array
      */
     public function toArray($request)
-    { 
+    {  
         return [
           "title" =>$this->title,
-          "showLink"=> route("question.show", $this->slug),
+          "showLink"=>str_replace(url("/api"),'',route("question.show", $this->slug)) ,
           "user"=>$this->user->name,
           "body"=>$this->body,
           "date"=>$this->created_at

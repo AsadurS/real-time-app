@@ -18,7 +18,8 @@ class Question extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format("d M, Y");
+        // return Carbon::parse($value)->format("d M, Y");
+        return Carbon::parse($value)->diffForHumans();
     }
 
    public function getRouteKeyName()

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Model\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
 class CategoryController extends Controller
 {
-    
-     public function __construct()
+
+    public function __construct()
     {
-        $this->middleware("jwt", ["expect"=>["index", "show"]]);
+        $this->middleware("jwt", ["except" => ["index", "show"]]);
     }
     /**
      * Display a listing of the resource.
@@ -56,7 +57,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-         $request->merge(['slug' => Str::slug($request->name)]);
+        $request->merge(['slug' => Str::slug($request->name)]);
         $category = $category->update($request->all());
         return $category;
     }
@@ -68,9 +69,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
-    {  
-         $category->delete();
+    {
+        $category->delete();
 
-         return response('deleted', 204);
+        return response('deleted', 204);
     }
 }

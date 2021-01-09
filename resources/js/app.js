@@ -1,5 +1,4 @@
 require('./bootstrap');
-
 window.Vue = require('vue');
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'

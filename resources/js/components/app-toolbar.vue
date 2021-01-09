@@ -15,7 +15,7 @@
 		      </v-btn> 
 		</router-link> 
 		 <router-link 
-	     to="/forum"
+	     to="/create-question"
 	      v-if="isShow">
 		      <v-btn  text>
 		      Ask Question
