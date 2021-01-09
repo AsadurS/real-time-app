@@ -1,15 +1,13 @@
-class Token{
+class Token {
 
 	/**
 	* Check Token is Valid ro not
 	*/
-	isValid(token)
-	{
+	isValid(token) {
 		const payload = this.payload(token);
-		let iss = payload.iss=== window.location.origin+"/api/auth/login"?payload.iss : window.location.origin+"/api/auth/signup";
-		console.log(payload.iss,iss)
-		if(payload)
-		{
+		let iss = payload.iss === window.location.origin + "/api/auth/login" ? payload.iss : window.location.origin + "/api/auth/signup";
+
+		if (payload) {
 			return payload.iss === iss ? true : false;
 		}
 
@@ -19,11 +17,11 @@ class Token{
 	/**
 	* Helper for Payload Decode
 	*/
-	payload(token){
-		
-	   const payload = 	token.split(".")[1];
+	payload(token) {
 
-	   return JSON.parse(atob(payload));
+		const payload = token.split(".")[1];
+
+		return JSON.parse(atob(payload));
 	}
 
 }
