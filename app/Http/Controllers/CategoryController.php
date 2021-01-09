@@ -20,7 +20,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::latest()->get();
+        $category = Category::latest()->get();
+        return response()->json(compact('category'));
     }
 
 

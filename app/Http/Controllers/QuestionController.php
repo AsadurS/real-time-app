@@ -33,9 +33,10 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(QuestionRequest $request)
-    {
-        //auth()->user()->question()->create($request->validated());
-        $question = Question::create($request->validated());
+    { 
+       
+        auth()->user()->questions()->create($request->validated());
+       
     }
 
     /**

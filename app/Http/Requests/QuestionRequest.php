@@ -35,7 +35,7 @@ class QuestionRequest extends FormRequest
            "title"=> "required|min:5",
            "slug"=> "required|unique:questions,slug|min:5",
            "body"=> "required",
-           "user_id"=> "required|exists:users,id",
+         //  "user_id"=> "required|exists:users,id",
            "category_id"=> "required|exists:categories,id",
         ];
     }

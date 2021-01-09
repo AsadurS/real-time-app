@@ -22,6 +22,8 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+const token = `Bearer  ${localStorage.getItem("token")}`
+window.axios.defaults.headers.common['Authorization'] = token;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -39,3 +41,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+// let token = document.querySelector('meta[name=csrf-token]');
+// if(token)
+// {
+//     window.axios.defaults.headers.common['X-CSRF_TOKEN'] = token;
+// }

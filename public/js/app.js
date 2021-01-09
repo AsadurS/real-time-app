@@ -2250,15 +2250,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       form: {
         title: null,
-        category_id: null
+        category_id: 1,
+        body: "lorem Ipsul"
       },
       categories: {}
     };
@@ -2268,7 +2266,25 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("api/category").then(function (res) {
-        return _this.categories = res.data;
+        return _this.categories = res.data.category;
+      });
+    },
+    category: function category() {
+      var arr = [];
+
+      for (var key in this.categories) {
+        var _this$categories$key = this.categories[key],
+            id = _this$categories$key.id,
+            name = _this$categories$key.name;
+        arr[id] = name;
+      }
+
+      console.log(arr);
+      return arr;
+    },
+    createCategory: function createCategory() {
+      axios.post("/api/question", this.form).then(function (res) {
+        return console.log(res);
       });
     }
   },
@@ -39860,6 +39876,14 @@ var render = function() {
     [
       _c(
         "v-form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.createCategory()
+            }
+          }
+        },
         [
           _c("v-text-field", {
             attrs: { label: "E-mail", type: "text", required: "" },
@@ -100084,6 +100108,8 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+var token = "Bearer  ".concat(localStorage.getItem("token"));
+window.axios.defaults.headers.common['Authorization'] = token;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -100097,6 +100123,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+// let token = document.querySelector('meta[name=csrf-token]');
+// if(token)
+// {
+//     window.axios.defaults.headers.common['X-CSRF_TOKEN'] = token;
+// }
 
 /***/ }),
 
